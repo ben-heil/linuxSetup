@@ -10,8 +10,11 @@ then
 	exit 1
 fi
 
-# Install pathogen (a vim plugin manager)
+# Install miniconda 3, a python environment manager
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh -b
 
+# Install pathogen (a vim plugin manager)
 mkdir -p ~/.vim/autoload ~/.vim/bundle && \
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
