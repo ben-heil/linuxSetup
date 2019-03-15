@@ -1,7 +1,4 @@
 set nocompatible
-execute pathogen#infect() 
-colorscheme mustang
-
 
 set hidden
 
@@ -29,6 +26,12 @@ set title                " change the terminal's title
 set visualbell           " don't beep
 set noerrorbells         " don't beep
 
+execute pathogen#infect() 
 syntax on 
 filetype plugin indent on
 
+let g:syntastic_python_flake8_args='--ignore=E501'
+
+"Map caps lock to escape
+au VimEnter * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+au VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
