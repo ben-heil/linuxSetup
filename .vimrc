@@ -26,12 +26,43 @@ set title                " change the terminal's title
 set visualbell           " don't beep
 set noerrorbells         " don't beep
 
-execute pathogen#infect() 
-syntax on 
-filetype plugin indent on
 
-let g:syntastic_python_flake8_args='--ignore=E501'
+"""""""""""""""""""""""""""""PLUGINS"""""""""""""""""""""""""""""""""""""""""""
+" Install vim-plug if it isn't already found
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-"Map caps lock to escape
-au VimEnter * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
-au VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
+call plug#begin('~/.vim/plugged')
+
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+Plug 'jimhester/lintr'
+Plug 'ervandew/supertab'
+
+call plug#end()
+
+" If vim-plug plugins listed above aren't already installed, install them
+" automatically
+autocmd VimEnter *
+  \  if !empty(filter(copy(g:plugs), '!isdirectory(v:val.dir)'))
+  \|   PlugInstall | q
+  \| endif
+
+" python-mode plugin settings
+let g:pymode_options_max_line_length = 99
+let g:pymode_lint_cwindow = 0
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Remove trailing whitespace from python files when saving
+autocmd BufWritePre *.py %s/\s\+$//e
+
+" Return to previous position when reopening file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
+
+highlight ColorColumn ctermbg=0 guibg=lightgrey
