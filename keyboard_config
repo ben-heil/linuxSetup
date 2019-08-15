@@ -1,0 +1,11 @@
+# KEYBOARD CONFIGURATION FILE
+
+# Copy this file into /etc/default/keyboard in order to swap caps lock and escape.
+# As XKBMODEL can be different between keyboards, check to make sure the default
+# keyboard is pc105. If not, just copy over the XKBOPTIONS value
+XKBMODEL="pc105"
+XKBLAYOUT="us"
+XKBVARIANT=""
+XKBOPTIONS="caps:swapescape"
+
+BACKSPACE="guess"
